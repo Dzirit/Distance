@@ -23,18 +23,21 @@ namespace DistanceTask
 			var deltaBCx = bx - x;
 			var deltaBCy = by - y;
 			//вычисляем скалярное произведение векторов
-			var scalarAbAc= deltaABx * deltaACx + deltaABy * deltaACy;
+			var scalarAbAc = deltaABx * deltaACx + deltaABy * deltaACy;
 			var scalarBcBa = deltaBCx * (-deltaABx) + deltaBCy * (-deltaABy);
 			//скалярное произведение векторов от отрезка до точки отрицательное, значит перепендикуляр от точки не падает на отрезок, а падает на его продолжение
-			if (scalarAbAc<0 || scalarBcBa<0)
+			if (scalarAbAc < 0 || scalarBcBa < 0)
 			{
 				//находим длину векторов
 				var lenghtAC = Math.Sqrt(Math.Pow((y - ay), 2) + Math.Pow((x - ax), 2));
 				var lenghtBC = Math.Sqrt(Math.Pow((y - by), 2) + Math.Pow((x - bx), 2));
 				return Math.Min(lenghtAC, lenghtBC);
 			}
+			//else if (deltaABx == 0 || deltaABy == 0) return Math.Sqrt(Math.Pow((ay - y), 2) + Math.Pow((ax - x), 2));
 			//иначе находтм длину перпендикуляра, которая является ысотой треугольника.
-			return  Math.Abs((by - ay) *(x-ax) - (bx - ax) * (y-ay)) / Math.Sqrt(Math.Pow((by - ay), 2) + Math.Pow((bx - ax), 2)); 
+			if (Math.Sqrt(Math.Pow((by - ay), 2) + Math.Pow((bx - ax), 2)) == 0) return Math.Sqrt(Math.Pow((ay - y), 2) + Math.Pow((ax - x), 2)); // проверка что вектор не нулевой.
+			double result = Math.Abs((by - ay) * (x - ax) - (bx - ax) * (y - ay)) / Math.Sqrt(Math.Pow((by - ay), 2) + Math.Pow((bx - ax), 2));
+			return result;
 		}
 	}
 }
